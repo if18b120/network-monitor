@@ -5,7 +5,11 @@
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>network_monitor</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>false</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.9" />
+  </ItemGroup>
 
 </Project>
