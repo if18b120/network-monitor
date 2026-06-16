@@ -1,23 +1,27 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
 
-string path = args[0];
+string path = "";
+if (args.Length > 0)
+{
+    path = args[0];
+}
 
-if (!Path.EndsInDirectorySeparator(path))
+if (path != "" && !Path.EndsInDirectorySeparator(path))
 {
     path += "/";
 }
 
 DataAccess dataAccess = new(path);
 
-IPAddress ip = dataAccess.GetIP();
+IPAddress ip = IPAddress.Parse("8.8.8.8");
 Ping ping = new();
 
 DateTime start = DateTime.Now;
+bool error = false;
+IPStatus status = IPStatus.Unknown;
 while (true)
 {
-    bool error = false;
-
     if (!error)
     {
         start = DateTime.Now;
@@ -26,6 +30,7 @@ while (true)
     if (pingReply.Status != IPStatus.Success)
     {
         error = true;
+        status = pingReply.Status;
     }
     else
     {
@@ -37,10 +42,10 @@ while (true)
             {
                 Start = start,
                 End = end,
-                Status = pingReply.Status
+                Status = status
             };
             dataAccess.SaveErrorEvent(errorEvent);
         }
-        Thread.Sleep(100);
+        Thread.Sleep(500);
     }
 }
