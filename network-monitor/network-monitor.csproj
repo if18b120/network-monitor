@@ -5,7 +5,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>network_monitor</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>false</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
