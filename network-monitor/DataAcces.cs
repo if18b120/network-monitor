@@ -7,20 +7,14 @@ public class DataAccess
 
     public DataAccess(string dbLocation)
     {
-        sqliteConnection = new SqliteConnection(dbLocation + "network-monitor.db");
+        sqliteConnection = new SqliteConnection("Data Source=" + dbLocation + "network-monitor.db");
         sqliteConnection.Open();
-    }
 
-    public IPAddress GetIP()
-    {
         SqliteCommand command = sqliteConnection.CreateCommand();
         command.CommandText = """
-                                SELECT IP
-                                FROM CONFIG
+                                CREATE TABLE IF NOT EXISTS EVENTS (START, END, STATUS)
                             """;
-        SqliteDataReader reader = command.ExecuteReader();
-        reader.Read();
-        return IPAddress.Parse(reader.GetString(0));
+        command.ExecuteNonQuery();
     }
 
     public void SaveErrorEvent(ErrorEvent errorEvent)
